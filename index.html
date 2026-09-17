@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ويكا - قطع غيار الجرارات والمعدات الثقيلة</title>
+    <!-- خط Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- مكتبة الأيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* النظام العام للصفحات (إخفاء تماماً وعدم حجز مساحة) */
+        .page-section {
+            display: none !important;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .page-section.active {
+            display: flex !important;
+            flex-direction: column;
+        }
+
+        /* ================= صفحة البداية (تسجيل الدخول) ================= */
+        #homePage.active {
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .admin-btn-top {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            border: 2px solid #f39c12;
+            color: #f39c12;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .admin-btn-top:hover {
+            background-color: #f39c12;
+            color: #fff;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 8px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .logo-box i {
+            font-size: 40px;
+            color: #fff;
+        }
+
+        .app-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1a252c;
+            margin-bottom: 5px;
+        }
+
+        .app-subtitle {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #edf2f7;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: #d35400;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            text-decoration: none;
+        }
+
+        .btn-login {
+            background-color: #102a43;
+            color: #fff;
+        }
+
+        .btn-login:hover {
+            background-color: #243b53;
+        }
+
+        .btn-register {
+            background-color: #d97706;
+            color: #fff;
+        }
+
+        .btn-register:hover {
+            background-color: #b45309;
+        }
+
+        .login-methods-hint {
+            text-align: center;
+            font-size: 12px;
+            color: #95a5a6;
+            margin: 15px 0;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #bdc3c7;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .divider::before {
+            margin-left: 10px;
+        }
+
+        .divider::after {
+            margin-right: 10px;
+        }
+
+        .btn-guest {
+            background-color: #f1f5f9;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-guest:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* ================= النوافذ المنبثقة (Modals) ================= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .auth-modal {
+            background: #fff;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: modalPop 0.3s ease;
+        }
+
+        @keyframes modalPop {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .auth-modal-content {
+            padding: 30px 25px 20px 25px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #f1f5f9;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #e2e8f0;
+        }
+
+        .auth-brand {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .auth-form-group {
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .auth-form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .auth-form-group input,
+        .auth-form-group select,
+        .auth-form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            background-color: #fff;
+            color: #1e293b;
+            direction: rtl;
+        }
+
+        .auth-form-group input:focus,
+        .auth-form-group select:focus,
+        .auth-form-group textarea:focus {
+            border-color: #d97706;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 16px;
+        }
+
+        .forgot-password a {
+            color: #475569;
+            font-size: 13px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-auth-action {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .arrow-icon-badge {
+            background-color: #ec4899;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            position: absolute;
+            right: 14px;
+        }
+
+        .auth-switch-text {
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .auth-switch-text a {
+            color: #d97706;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .auth-footer {
+            background-color: #f8f6f0;
+            text-align: center;
+            padding: 12px;
+            font-size: 12px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            font-weight: 600;
+        }
+
+        /* ================= صفحة الكتالوج (المربعات) ================= */
+        #catalogPage.active {
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: block !important;
+        }
+
+        .catalog-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .catalog-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .catalog-brand .mini-logo {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .catalog-brand h2 {
+            font-size: 22px;
+            font-weight: 900;
+            color: #1e293b;
+        }
+
+        .catalog-brand p {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .user-badge-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            color: #334155;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .user-badge-btn:hover {
+            background: #e2e8f0;
+        }
+
+        /* شريط البحث */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 14px 45px 14px 20px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            font-size: 15px;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .search-container i {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        /* فلاتر الأقسام */
+        .categories-bar {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            scrollbar-width: thin;
+        }
+
+        .category-chip {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .category-chip.active,
+        .category-chip:hover {
+            background: #102a43;
+            color: #fff;
+            border-color: #102a43;
+        }
+
+        .products-count {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        /* شبكة المنتجات (المربعات المتجاوبة) */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #edf2f7;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-img-box {
+            position: relative;
+            height: 170px;
+            background: #e2e8f0;
+        }
+
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .product-info {
+            padding: 16px;
+            text-align: right;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 900;
+            color: #d97706;
+        }
+
+
+        /* ================= صفحة تفاصيل المنتج ================= */
+        #productDetailPage.active {
+            padding: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+            display: block !important;
+        }
+
+        .back-to-catalog {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            color: #334155;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-to-catalog:hover {
+            background: #f1f5f9;
+        }
+
+        .detail-card {
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #edf2f7;
+            padding: 20px;
+        }
+
+        .detail-img-box {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: #f1f5f9;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .detail-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-tag-floating {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+        }
+
+        .detail-title {
+            font-size: 22px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .detail-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .detail-price-badge {
+            background: #fef3c7;
+            color: #d97706;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .detail-badge-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .detail-badge-info i {
+            color: #10b981;
+        }
+
+        .detail-section-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: right;
+        }
+
+        .detail-section-title::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: #f59e0b;
+            border-radius: 2px;
+        }
+
+        .detail-desc {
+            font-size: 15px;
+            color: #475569;
+            line-height: 1.8;
+            text-align: right;
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* ================= تصميم لوحة التحكم (Admin Dashboard) المتجاوب ================= */
+        #adminDashboardPage.active {
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex !important;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .admin-header-bar {
+            background-color: #102a43;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .admin-header-title h1 {
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .admin-header-title p {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .admin-nav-btns {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .admin-top-btn {
+            background: #1e3a5f;
+            border: 1px solid #294b75;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .admin-top-btn:hover {
+            background: #294b75;
+        }
+
+        .admin-top-btn.logout {
+            background: #e74c3c;
+            border-color: #c0392b;
+        }
+
+        .admin-top-btn.logout:hover {
+            background: #c0392b;
+        }
+
+        /* إحصائيات لوحة التحكم */
+        .admin-stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .admin-stat-card {
+            background: #fff;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .admin-stat-info {
+            text-align: right;
+        }
+
+        .admin-stat-number {
+            font-size: 24px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .admin-stat-label {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .admin-stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #fef3c7;
+            color: #d97706;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .admin-stat-icon.categories-icon {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        /* أزرار الإجراءات والبحث في الإدارة */
+        .admin-actions-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-add-product {
+            background: #d97706;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .btn-add-product:hover {
+            background: #b45309;
+        }
+
+        .admin-search-box {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .admin-search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .admin-search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        /* قائمة المنتجات في لوحة التحكم */
+        .admin-products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .admin-product-item {
+            background: #fff;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+            gap: 10px;
+        }
+
+        .admin-product-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-product-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: right;
+            overflow: hidden;
+        }
+
+        .admin-product-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .admin-product-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .admin-product-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 250px;
+        }
+
+        .admin-product-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+
+        .admin-product-price {
+            font-weight: 900;
+            color: #d97706;
+        }
+
+        .admin-product-tag-badge {
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .admin-product-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .admin-action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #475569;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .admin-action-btn.delete:hover {
+            background: #fee2e2;
+            color: #ef4444;
+            border-color: #fca5a5;
+        }
+
+        .admin-action-btn.edit:hover {
+            background: #fef3c7;
+            color: #d97706;
+            border-color: #fde68a;
+        }
+
+        /* نافذة إضافة وتعديل المنتج المتجاوبة */
+        .product-modal-box {
+            background: #fff;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: modalPop 0.3s ease;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+        }
+
+        .product-modal-header {
+            padding: 18px 20px 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .product-modal-header h3 {
+            font-size: 18px;
+            font-weight: 900;
+            color: #1e293b;
+        }
+
+        .product-modal-body {
+            padding: 15px 20px;
+            overflow-y: auto;
+            flex: 1;
+            text-align: right;
+        }
+
+        .form-row-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 576px) {
+            .form-row-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-product-info h4 {
+                max-width: 140px;
+            }
+        }
+
+        .image-upload-section {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .image-upload-btns {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 180px;
+        }
+
+        .btn-upload-file {
+            background: #e2e8f0;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-upload-file:hover {
+            background: #cbd5e1;
+        }
+
+        .image-preview-box {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            color: #94a3b8;
+            font-size: 24px;
+        }
+
+        .image-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= 1. صفحة البداية وتسهيل الدخول ================= -->
+    <div id="homePage" class="page-section active">
+        <!-- زر صفحة المدير -->
+        <button class="admin-btn-top" onclick="openAdminModal()">
+            <i class="fa-solid fa-user-shield"></i> صفحة المدير
+        </button>
+
+        <div class="header-section">
+            <div class="logo-box">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+            <h1 class="app-title">ويكا</h1>
+            <p class="app-subtitle">قطع غيار الجرارات والمعدات الثقيلة</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span>العملاء</span>
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <button class="btn btn-login" onclick="openLoginModal()">
+                <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول
+            </button>
+
+            <button class="btn btn-register" onclick="openRegisterModal()">
+                <i class="fa-solid fa-user-plus"></i> إنشاء حساب جديد
+            </button>
+
+            <div class="login-methods-hint">
+                يمكنك الدخول أو التسجيل برقم الهاتف
+            </div>
+
+            <div class="divider">أو</div>
+
+            <button class="btn btn-guest" onclick="goToCatalog()">
+                <i class="fa-solid fa-store"></i> تصفح الكتالوج بدون حساب
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ================= 2. صفحة الكتالوج (شبكة المنتجات) ================= -->
+    <div id="catalogPage" class="page-section">
+        <div class="catalog-top-bar">
+            <div class="catalog-brand">
+                <div class="mini-logo">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+                <div>
+                    <h2>ويكا</h2>
+                    <p>قطع غيار المعدات الثقيلة</p>
+                </div>
+            </div>
+            <button class="user-badge-btn" onclick="backToHome()">
+                <i class="fa-solid fa-user"></i> دخول / إنشاء حساب
+            </button>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="بحث عن قطعة غيار..." oninput="filterProducts()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <div class="categories-bar" id="categoriesBar">
+            <!-- سيتم توليد التصنيفات ديناميكياً -->
+        </div>
+
+        <div class="products-count" id="productsCount">0 منتج</div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- المنتجات سيتم توليدها ديناميكياً -->
+        </div>
+    </div>
+
+
+    <!-- ================= 3. صفحة تفاصيل المنتج ================= -->
+    <div id="productDetailPage" class="page-section">
+        <a href="#" class="back-to-catalog" onclick="goToCatalog(); return false;">
+            <i class="fa-solid fa-arrow-right"></i> الكتالوج
+        </a>
+
+        <div class="detail-card">
+            <div class="detail-img-box">
+                <img id="detailImg" src="" alt="صورة المنتج">
+                <span class="detail-tag-floating" id="detailTag">هيدروليك</span>
+            </div>
+
+            <h1 class="detail-title" id="detailTitle"></h1>
+
+            <div class="detail-meta-row">
+                <div class="detail-price-badge" id="detailPrice"></div>
+                <div class="detail-badge-info">
+                    <i class="fa-solid fa-circle-check"></i> <span id="detailCategoryBadge">هيدروليك</span>
+                </div>
+                <div class="detail-badge-info">
+                    <i class="fa-solid fa-clock"></i> السعر للعرض فقط
+                </div>
+            </div>
+
+            <div class="detail-section-title">وصف تفصيلي</div>
+            <p class="detail-desc" id="detailDesc"></p>
+        </div>
+    </div>
+
+
+    <!-- ================= 4. صفحة لوحة تحكم المدير (Admin Dashboard) ================= -->
+    <div id="adminDashboardPage" class="page-section">
+        <div class="admin-header-bar">
+            <div class="admin-header-title">
+                <h1>لوحة التحكم</h1>
+                <p>ويكا - إدارة كتالوج قطع الغيار</p>
+            </div>
+            <div class="admin-nav-btns">
+                <button class="admin-top-btn" onclick="goToCatalog()">
+                    <i class="fa-solid fa-store"></i> عرض الكتالوج
+                </button>
+                <button class="admin-top-btn logout" onclick="adminLogout()">
+                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+
+        <!-- إحصائيات لوحة التحكم -->
+        <div class="admin-stats-row">
+            <div class="admin-stat-card">
+                <div class="admin-stat-info">
+                    <div class="admin-stat-number" id="adminTotalProducts">0</div>
+                    <div class="admin-stat-label">إجمالي المنتجات</div>
+                </div>
+                <div class="admin-stat-icon">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-info">
+                    <div class="admin-stat-number" id="adminTotalCategories">0</div>
+                    <div class="admin-stat-label">التصنيفات</div>
+                </div>
+                <div class="admin-stat-icon categories-icon">
+                    <i class="fa-solid fa-tag"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- أزرار الإجراءات والبحث في الإدارة -->
+        <div class="admin-actions-row">
+            <button class="btn-add-product" onclick="openAddProductModal()">
+                <i class="fa-solid fa-plus"></i> إضافة منتج
+            </button>
+            <div class="admin-search-box">
+                <input type="text" id="adminSearchInput" placeholder="بحث في المنتجات..."
+                    oninput="filterAdminProducts()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </div>
+
+        <!-- قائمة المنتجات الخاصة بلوحة التحكم -->
+        <div class="admin-products-list" id="adminProductsList">
+            <!-- يتم تعبئتها ديناميكياً -->
+        </div>
+    </div>
+
+
+    <!-- ================= نافذة إضافة منتج جديد ================= -->
+    <div class="modal-overlay" id="addProductModal">
+        <div class="product-modal-box">
+            <button class="modal-close" style="top: 15px; left: 15px;" onclick="closeAddProductModal()">&times;</button>
+            <div class="product-modal-header">
+                <h3>إضافة منتج جديد</h3>
+            </div>
+            <div class="product-modal-body">
+                <div class="auth-form-group">
+                    <label>اسم المنتج *</label>
+                    <input type="text" id="newProdTitle" placeholder="مثال: فلتر زيت لجرار جون دير">
+                </div>
+                <div class="form-row-grid">
+                    <div class="auth-form-group">
+                        <label>السعر (ج.م) *</label>
+                        <input type="text" id="newProdPrice" placeholder="1500">
+                    </div>
+                    <div class="auth-form-group">
+                        <label>التصنيف * <span style="font-size: 11px; color: #d97706; font-weight: normal;">(اختار أو
+                                اكتب تصنيف جديد)</span></label>
+                        <input type="text" id="newProdTag" list="categoriesList"
+                            placeholder="اختار أو اكتب تصنيف جديد...">
+                        <datalist id="categoriesList">
+                            <!-- سيتم تعبئتها ديناميكياً -->
+                        </datalist>
+                    </div>
+                </div>
+                <div class="auth-form-group">
+                    <label>صورة المنتج</label>
+                    <div class="image-upload-section">
+                        <div class="image-upload-btns">
+                            <button type="button" class="btn-upload-file"
+                                onclick="document.getElementById('newProdFile').click()">
+                                <i class="fa-solid fa-upload"></i> رفع صورة من الجهاز
+                            </button>
+                            <input type="file" id="newProdFile" accept="image/*" style="display: none;"
+                                onchange="previewNewImage(event)">
+                            <input type="text" id="newProdImg" placeholder="https://... أو الصق رابط الصورة"
+                                oninput="previewNewUrl(this.value)">
+                        </div>
+                        <div class="image-preview-box" id="newProdImgPreview">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="auth-form-group">
+                    <label>الوصف التفصيلي</label>
+                    <textarea id="newProdDesc" rows="3"
+                        placeholder="اكتب وصفًا شاملًا للمنتج: المواصفات، المقاسات، الموديلات المتوافقة..."></textarea>
+                </div>
+                <button class="btn-auth-action" onclick="saveNewProduct()">
+                    إضافة المنتج
+                    <span class="arrow-icon-badge"><i class="fa-solid fa-plus"></i></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= نافذة تعديل المنتج ================= -->
+    <div class="modal-overlay" id="editProductModal">
+        <div class="product-modal-box">
+            <button class="modal-close" style="top: 15px; left: 15px;"
+                onclick="closeEditProductModal()">&times;</button>
+            <div class="product-modal-header">
+                <h3>تعديل المنتج</h3>
+            </div>
+            <div class="product-modal-body">
+                <input type="hidden" id="editProdId">
+                <div class="auth-form-group">
+                    <label>اسم المنتج *</label>
+                    <input type="text" id="editProdTitle">
+                </div>
+                <div class="form-row-grid">
+                    <div class="auth-form-group">
+                        <label>السعر (ج.م) *</label>
+                        <input type="text" id="editProdPrice">
+                    </div>
+                    <div class="auth-form-group">
+                        <label>التصنيف * <span style="font-size: 11px; color: #d97706; font-weight: normal;">(اختار أو
+                                اكتب تصنيف جديد)</span></label>
+                        <input type="text" id="editProdTag" list="categoriesListEdit"
+                            placeholder="اختار أو اكتب تصنيف جديد...">
+                        <datalist id="categoriesListEdit">
+                            <!-- سيتم تعبئتها ديناميكياً -->
+                        </datalist>
+                    </div>
+                </div>
+                <div class="auth-form-group">
+                    <label>صورة المنتج</label>
+                    <div class="image-upload-section">
+                        <div class="image-upload-btns">
+                            <button type="button" class="btn-upload-file"
+                                onclick="document.getElementById('editProdFile').click()">
+                                <i class="fa-solid fa-upload"></i> رفع صورة من الجهاز
+                            </button>
+                            <input type="file" id="editProdFile" accept="image/*" style="display: none;"
+                                onchange="previewEditImage(event)">
+                            <input type="text" id="editProdImg" oninput="previewEditUrl(this.value)">
+                        </div>
+                        <div class="image-preview-box" id="editProdImgPreview">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="auth-form-group">
+                    <label>الوصف التفصيلي</label>
+                    <textarea id="editProdDesc" rows="3"></textarea>
+                </div>
+                <button class="btn-auth-action" onclick="updateExistingProduct()">
+                    حفظ التعديلات
+                    <span class="arrow-icon-badge"><i class="fa-solid fa-floppy-disk"></i></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= نافذة تسجيل الدخول المنبثقة ================= -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="auth-modal">
+            <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+            <div class="auth-modal-content">
+                <div class="auth-brand">
+                    <span>whacka</span>
+                    <i class="fa-solid fa-asterisk" style="font-size: 18px; color: #1e293b;"></i>
+                </div>
+                <div class="auth-form-group" style="margin-top: 20px;">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="loginPhone" placeholder="01xxxxxxxx0">
+                </div>
+                <div class="auth-form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="loginPassword" placeholder="كلمة المرور">
+                </div>
+                <div class="forgot-password"><a href="#">نسيت كلمة المرور؟</a></div>
+                <button class="btn-auth-action" onclick="handleLogin()">
+                    تسجيل الدخول
+                    <span class="arrow-icon-badge"><i class="fa-solid fa-arrow-left"></i></span>
+                </button>
+                <div class="auth-switch-text">ليس لديك حساب؟ <a href="#"
+                        onclick="switchToRegister(); return false;">إنشاء حساب</a></div>
+            </div>
+            <div class="auth-footer">مقدم من Whacka</div>
+        </div>
+    </div>
+
+    <!-- ================= نافذة إنشاء حساب المنبثقة ================= -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="auth-modal">
+            <button class="modal-close" onclick="closeRegisterModal()">&times;</button>
+            <div class="auth-modal-content">
+                <div class="auth-brand">
+                    <span>whacka</span>
+                    <i class="fa-solid fa-asterisk" style="font-size: 18px; color: #1e293b;"></i>
+                </div>
+                <div class="auth-form-group" style="margin-top: 20px;">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="regPhone" placeholder="01xxxxxxxx0">
+                </div>
+                <div class="auth-form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="regPassword" placeholder="6 أحرف على الأقل">
+                </div>
+                <div class="auth-form-group">
+                    <label>الاسم الظاهر <span style="color: #94a3b8; font-weight: normal;">(اختياري)</span></label>
+                    <input type="text" id="regName" placeholder="كيف يراك الآخرون">
+                </div>
+                <button class="btn-auth-action" onclick="handleRegister()">
+                    إنشاء حساب
+                    <span class="arrow-icon-badge"><i class="fa-solid fa-arrow-left"></i></span>
+                </button>
+                <div class="auth-switch-text">لديك حساب بالفعل؟ <a href="#"
+                        onclick="switchToLogin(); return false;">تسجيل الدخول</a></div>
+            </div>
+            <div class="auth-footer">مقدم من Whacka</div>
+        </div>
+    </div>
+
+    <!-- ================= نافذة المدير المنبثقة ================= -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="auth-modal" style="max-width: 400px;">
+            <button class="modal-close" onclick="closeAdminModal()">&times;</button>
+            <div class="auth-modal-content">
+                <h3 style="margin-bottom: 20px; color: #102a43; text-align: center;">تسجيل دخول المدير</h3>
+
+                <!-- سطر الرمز التعريفي ورقم التليفون وكلمة المرور الخاصة بلوحة الأدمن -->
+                <div class="auth-form-group">
+                    <label>الرمز التعريفي (رقم الهاتف)</label>
+                    <input type="text" id="adminUser" placeholder="أدخل الرمز التعريفي">
+                </div>
+                <div class="auth-form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="adminPass" placeholder="أدخل كلمة المرور">
+                </div>
+                <button class="btn-auth-action" onclick="handleAdminLogin()" style="margin-top: 10px;">دخول لوحة
+                    التحكم</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs وربط الكود -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWHr2170dfdQUjjZfT9gJ3tRnWVJuWu5o",
+            authDomain: "weka-spare-parts.firebaseapp.com",
+            databaseURL: "https://weka-spare-parts-default-rtdb.firebaseio.com",
+            projectId: "weka-spare-parts",
+            storageBucket: "weka-spare-parts.firebasestorage.app",
+            messagingSenderId: "670924549482",
+            appId: "1:670924549482:web:f901d835ea022dd0484913",
+            measurementId: "G-4B1V0Z616T"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let defaultProductsData = {
+            "1": {
+                title: "طقم فلاتر زيت أصلية",
+                price: "850 ج.م",
+                tag: "فلاتر",
+                img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+                desc: "طقم فلاتر زيت أصلية عالية الجودة ومطابقة للمواصفات القياسية لحماية محركات المعدات الثقيلة والجرارات من الشوائب وإطالة عمر التشغيل."
+            },
+            "2": {
+                title: "طقم خراطيم هيدروليك مقوى",
+                price: "1,800 ج.م",
+                tag: "هيدروليك",
+                img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
+                desc: "طقم خراطيم هيدروليك مجدولة بسلكين فولاذيين. تتحمل ضغط حتى 400 بار ودرجات حرارة من -40 إلى +100 درجة. تشمل الوصلات القياسية المقاسة حسب طلب العميل."
+            },
+            "3": {
+                title: "مضخة هيدروليك رئيسية",
+                price: "12,500 ج.م",
+                tag: "هيدروليك",
+                img: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80",
+                desc: "مضخة هيدروليك رئيسية ذات كفاءة عالية ومزودة بنظام ضغط متطور لتشغيل الأنظمة الهيدروليكية الشاقة في المعدات الثقيلة والجرارات."
+            },
+            "4": {
+                title: "جرار",
+                price: "2,000 ج.م",
+                tag: "جرارات",
+                img: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80",
+                desc: "قطعة غيار أساسية للجرارات والمعدات الزراعية والصناعية الثقيلة، مصممة لتحمل ظروف العمل الشاقة والأداء المستمر."
+            }
+        };
+
+        window.productsData = {};
+
+        function fetchProductsFromFirebase(callback) {
+            const dbRef = ref(db);
+            get(child(dbRef, 'products')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    window.productsData = snapshot.val();
+                } else {
+                    set(ref(db, 'products'), defaultProductsData);
+                    window.productsData = defaultProductsData;
+                }
+                if (callback) callback();
+            }).catch((error) => {
+                console.error(error);
+                window.productsData = defaultProductsData;
+                if (callback) callback();
+            });
+        }
+
+        window.saveProductsToFirebase = function (callback) {
+            set(ref(db, 'products'), window.productsData).then(() => {
+                if (callback) callback();
+            });
+        };
+
+        // دالة إنشاء حساب حقيقية ومرتبطة بفايربيز
+        window.handleRegister = function () {
+            const phone = document.getElementById('regPhone').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            const name = document.getElementById('regName').value.trim();
+
+            if (!phone || !password) {
+                alert("يرجى إدخال رقم الهاتف وكلمة المرور!");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("كلمة المرور يجب أن تكون 6 أحرف على الأقل!");
+                return;
+            }
+
+            const cleanPhone = phone.replace(/[^0-9]/g, '');
+            const userRef = ref(db, 'users/' + cleanPhone);
+
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    alert("رقم الهاتف هذا مسجل مسبقاً، يرجى تسجيل الدخول مباشرة!");
+                } else {
+                    set(userRef, {
+                        phone: cleanPhone,
+                        password: password,
+                        name: name || "عميل ويكا",
+                        createdAt: Date.now()
+                    }).then(() => {
+                        localStorage.setItem('whacka_current_user', cleanPhone);
+                        closeRegisterModal();
+                        goToCatalog();
+                        alert("تم إنشاء الحساب بنجاح وتسجيل الدخول!");
+                    }).catch((err) => {
+                        alert("حدث خطأ أثناء الاتصال بقاعدة البيانات.");
+                    });
+                }
+            }).catch((error) => {
+                console.error(error);
+                alert("حدث خطأ أثناء التحقق من الحساب.");
+            });
+        };
+
+        // دالة تسجيل دخول حقيقية ومرتبطة بفايربيز
+        window.handleLogin = function () {
+            const phone = document.getElementById('loginPhone').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!phone || !password) {
+                alert("يرجى إدخال رقم الهاتف وكلمة المرور!");
+                return;
+            }
+
+            const cleanPhone = phone.replace(/[^0-9]/g, '');
+            const userRef = ref(db, 'users/' + cleanPhone);
+
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.password === password) {
+                        localStorage.setItem('whacka_current_user', cleanPhone);
+                        closeLoginModal();
+                        goToCatalog();
+                    } else {
+                        alert("كلمة المرور غير صحيحة!");
+                    }
+                } else {
+                    alert("رقم الهاتف غير مسجل! يرجى إنشاء حساب جديد أولاً.");
+                }
+            }).catch((error) => {
+                console.error(error);
+                alert("حدث خطأ أثناء الاتصال بقاعدة البيانات.");
+            });
+        };
+
+        window.getActiveCategories = function () {
+            let activeCategoriesSet = new Set();
+            for (let id in window.productsData) {
+                let tag = window.productsData[id].tag;
+                if (tag && tag.trim() !== "") {
+                    activeCategoriesSet.add(tag.trim());
+                }
+            }
+            return Array.from(activeCategoriesSet);
+        }
+
+        window.renderCategoriesBar = function () {
+            const bar = document.getElementById('categoriesBar');
+            let categories = window.getActiveCategories();
+
+            const catCountElem = document.getElementById('adminTotalCategories');
+            if (catCountElem) {
+                catCountElem.innerText = categories.length;
+            }
+
+            if (bar) {
+                let html = `<div class="category-chip ${currentCategory === 'الكل' ? 'active' : ''}" data-category="الكل">الكل</div>`;
+                categories.forEach(cat => {
+                    html += `<div class="category-chip ${currentCategory === cat ? 'active' : ''}" data-category="${cat}">${cat}</div>`;
+                });
+                bar.innerHTML = html;
+
+                document.querySelectorAll('.category-chip').forEach(chip => {
+                    chip.addEventListener('click', function () {
+                        document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+                        this.classList.add('active');
+                        currentCategory = this.getAttribute('data-category');
+                        window.filterProducts();
+                    });
+                });
+            }
+
+            let datalistHtml = '';
+            categories.forEach(cat => {
+                datalistHtml += `<option value="${cat}">`;
+            });
+            if (document.getElementById('categoriesList')) {
+                document.getElementById('categoriesList').innerHTML = datalistHtml;
+                document.getElementById('categoriesListEdit').innerHTML = datalistHtml;
+            }
+        }
+
+        window.renderCatalogProducts = function () {
+            window.renderCategoriesBar();
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            for (let id in window.productsData) {
+                const p = window.productsData[id];
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('data-title', p.title);
+                card.setAttribute('data-category', p.tag);
+                card.onclick = () => window.openProductDetail(id);
+
+                card.innerHTML = `
+                    <div class="product-img-box">
+                        <img src="${p.img}" alt="${p.title}">
+                        <span class="product-tag">${p.tag}</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${p.title}</div>
+                        <div class="product-price">${p.price}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+            window.filterProducts();
+        }
+
+        window.renderAdminProducts = function () {
+            window.renderCategoriesBar();
+            const list = document.getElementById('adminProductsList');
+            if (!list) return;
+            list.innerHTML = '';
+
+            let count = 0;
+            for (let id in window.productsData) {
+                const p = window.productsData[id];
+                count++;
+                const item = document.createElement('div');
+                item.className = 'admin-product-item';
+                item.setAttribute('data-admin-title', p.title.toLowerCase());
+
+                item.innerHTML = `
+                    <div class="admin-product-details">
+                        <div class="admin-product-thumb">
+                            <img src="${p.img}" alt="${p.title}">
+                        </div>
+                        <div class="admin-product-info">
+                            <h4>${p.title}</h4>
+                            <div class="admin-product-meta">
+                                <span class="admin-product-price">${p.price}</span>
+                                <span class="admin-product-tag-badge">${p.tag}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-product-actions">
+                        <button class="admin-action-btn edit" onclick="openEditProductModal('${id}')" title="تعديل"><i class="fa-solid fa-pen"></i></button>
+                        <button class="admin-action-btn delete" onclick="deleteProduct('${id}')" title="حذف"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                list.appendChild(item);
+            }
+            document.getElementById('adminTotalProducts').innerText = count;
+        }
+
+        window.saveNewProduct = function () {
+            const title = document.getElementById('newProdTitle').value.trim();
+            const price = document.getElementById('newProdPrice').value.trim();
+            const tag = document.getElementById('newProdTag').value.trim() || "عام";
+            let img = document.getElementById('newProdImg').value.trim();
+            const desc = document.getElementById('newProdDesc').value.trim();
+
+            if (!title || !price) {
+                alert("يرجى إدخال اسم المنتج والسعر!");
+                return;
+            }
+
+            if (!img) {
+                img = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80";
+            }
+
+            const newId = 'prod_' + Date.now();
+            window.productsData[newId] = {
+                title: title,
+                price: price.includes('ج.م') ? price : price + ' ج.م',
+                tag: tag,
+                img: img,
+                desc: desc || "لا يوجد وصف تفصيلي."
+            };
+
+            window.saveProductsToFirebase(() => {
+                closeAddProductModal();
+                renderAdminProducts();
+                renderCatalogProducts();
+                alert("تم إضافة المنتج وتحديث التصنيفات في فايربيز بنجاح!");
+            });
+        }
+
+        window.updateExistingProduct = function () {
+            const id = document.getElementById('editProdId').value;
+            const p = window.productsData[id];
+            if (!p) return;
+
+            const title = document.getElementById('editProdTitle').value.trim();
+            const price = document.getElementById('editProdPrice').value.trim();
+            const tag = document.getElementById('editProdTag').value.trim() || "عام";
+            let img = document.getElementById('editProdImg').value.trim();
+            const desc = document.getElementById('editProdDesc').value.trim();
+
+            if (!title || !price) {
+                alert("يرجى إدخال اسم المنتج والسعر!");
+                return;
+            }
+
+            p.title = title;
+            p.price = price.includes('ج.م') ? price : price + ' ج.م';
+            p.tag = tag;
+            if (img) p.img = img;
+            p.desc = desc;
+
+            window.saveProductsToFirebase(() => {
+                closeEditProductModal();
+                renderAdminProducts();
+                renderCatalogProducts();
+                alert("تم حفظ التعديلات وتحديث التصنيفات في فايربيز بنجاح!");
+            });
+        }
+
+        window.deleteProduct = function (id) {
+            if (confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
+                delete window.productsData[id];
+                window.saveProductsToFirebase(() => {
+                    renderAdminProducts();
+                    renderCatalogProducts();
+                });
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchProductsFromFirebase(() => {
+                window.renderCatalogProducts();
+                window.renderAdminProducts();
+
+                let savedPage = localStorage.getItem('whacka_active_page');
+                if (savedPage && document.getElementById(savedPage)) {
+                    showPage(savedPage);
+                } else {
+                    showPage('homePage');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => {
+                p.classList.remove('active');
+            });
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                localStorage.setItem('whacka_active_page', pageId);
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function goToCatalog() {
+            closeLoginModal();
+            closeRegisterModal();
+            closeAdminModal();
+            if (typeof window.renderCatalogProducts === 'function') window.renderCatalogProducts();
+            showPage('catalogPage');
+        }
+
+        function backToHome() {
+            closeLoginModal();
+            closeRegisterModal();
+            showPage('homePage');
+        }
+
+        function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+        function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
+
+        function openRegisterModal() { document.getElementById('registerModal').style.display = 'flex'; }
+        function closeRegisterModal() { document.getElementById('registerModal').style.display = 'none'; }
+
+        function switchToRegister() { closeLoginModal(); openRegisterModal(); }
+        function switchToLogin() { closeRegisterModal(); openLoginModal(); }
+
+        function openAdminModal() {
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPass').value = '';
+            document.getElementById('adminModal').style.display = 'flex';
+        }
+        function closeAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
+
+        function handleAdminLogin() {
+            const user = document.getElementById('adminUser').value.trim();
+            const pass = document.getElementById('adminPass').value.trim();
+
+            if (user === "01000000" && pass === "admin123") {
+                closeAdminModal();
+                if (typeof window.renderAdminProducts === 'function') window.renderAdminProducts();
+                showPage('adminDashboardPage');
+            } else {
+                alert("الرمز التعريفي أو كلمة المرور غير صحيحة!");
+            }
+        }
+
+        function adminLogout() {
+            backToHome();
+        }
+
+        function openAddProductModal() {
+            if (typeof window.renderCategoriesBar === 'function') window.renderCategoriesBar();
+            document.getElementById('newProdTitle').value = '';
+            document.getElementById('newProdPrice').value = '';
+            document.getElementById('newProdTag').value = '';
+            document.getElementById('newProdImg').value = '';
+            document.getElementById('newProdDesc').value = '';
+            document.getElementById('newProdImgPreview').innerHTML = '<i class="fa-solid fa-box"></i>';
+            document.getElementById('addProductModal').style.display = 'flex';
+        }
+
+        function closeAddProductModal() {
+            document.getElementById('addProductModal').style.display = 'none';
+        }
+
+        function previewNewUrl(url) {
+            const preview = document.getElementById('newProdImgPreview');
+            if (url.trim() !== '') {
+                preview.innerHTML = `<img src="${url}" alt="معاينة" onerror="this.onerror=null;this.parentNode.innerHTML='<i class=\'fa-solid fa-triangle-exclamation\'></i>';">`;
+            } else {
+                preview.innerHTML = '<i class="fa-solid fa-box"></i>';
+            }
+        }
+
+        function previewNewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('newProdImg').value = e.target.result;
+                    document.getElementById('newProdImgPreview').innerHTML = `<img src="${e.target.result}" alt="معاينة">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openEditProductModal(id) {
+            if (typeof window.renderCategoriesBar === 'function') window.renderCategoriesBar();
+            const p = window.productsData[id];
+            if (!p) return;
+
+            document.getElementById('editProdId').value = id;
+            document.getElementById('editProdTitle').value = p.title;
+            document.getElementById('editProdPrice').value = p.price.replace(' ج.م', '');
+            document.getElementById('editProdTag').value = p.tag;
+            document.getElementById('editProdImg').value = p.img;
+            document.getElementById('editProdDesc').value = p.desc;
+            document.getElementById('editProdImgPreview').innerHTML = `<img src="${p.img}" alt="معاينة">`;
+
+            document.getElementById('editProductModal').style.display = 'flex';
+        }
+
+        function closeEditProductModal() {
+            document.getElementById('editProductModal').style.display = 'none';
+        }
+
+        function previewEditUrl(url) {
+            const preview = document.getElementById('editProdImgPreview');
+            if (url.trim() !== '') {
+                preview.innerHTML = `<img src="${url}" alt="معاينة" onerror="this.onerror=null;this.parentNode.innerHTML='<i class=\'fa-solid fa-triangle-exclamation\'></i>';">`;
+            } else {
+                preview.innerHTML = '<i class="fa-solid fa-box"></i>';
+            }
+        }
+
+        function previewEditImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('editProdImg').value = e.target.result;
+                    document.getElementById('editProdImgPreview').innerHTML = `<img src="${e.target.result}" alt="معاينة">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function filterAdminProducts() {
+            const query = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+            const items = document.querySelectorAll('.admin-product-item');
+            items.forEach(item => {
+                const title = item.getAttribute('data-admin-title');
+                if (title.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openProductDetail(id) {
+            const prod = window.productsData[id];
+            if (prod) {
+                document.getElementById('detailTitle').innerText = prod.title;
+                document.getElementById('detailPrice').innerText = prod.price;
+                document.getElementById('detailTag').innerText = prod.tag;
+                document.getElementById('detailCategoryBadge').innerText = prod.tag;
+                document.getElementById('detailImg').src = prod.img;
+                document.getElementById('detailDesc').innerText = prod.desc;
+                showPage('productDetailPage');
+            }
+        }
+
+        let currentCategory = 'الكل';
+
+        function filterProducts() {
+            const searchInputElem = document.getElementById('searchInput');
+            const query = searchInputElem ? searchInputElem.value.trim().toLowerCase() : '';
+            const cards = document.querySelectorAll('.product-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const category = card.getAttribute('data-category');
+
+                const matchesCategory = (currentCategory === 'الكل' || category === currentCategory);
+                const matchesQuery = (title.includes(query));
+
+                if (matchesCategory && matchesQuery) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const countElem = document.getElementById('productsCount');
+            if (countElem) {
+                countElem.innerText = visibleCount + " منتج";
+            }
+        }
+
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
